@@ -1,0 +1,4 @@
+---
+# handlers file for php-fpm
+- name: restart php-fpm
+  service: name=php7.0-fpm state=restarted enabled=yes

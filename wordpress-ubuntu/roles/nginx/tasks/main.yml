@@ -1,0 +1,18 @@
+---
+# tasks file for nginx
+- name: Install nginx
+  apt: name=nginx state=present
+
+- name: Creates directory
+  file: path=/etc/nginx/conf.d state=directory
+
+- name: Copy nginx configuration for wordpress
+  template: src=default.conf.j2 dest=/etc/nginx/conf.d/default.conf
+  notify: restart nginx
+
+- name: Disable default nginx config
+  command: mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf_old creates=/etc/nginx/nginx.conf_old
+
+- name: Copy nginx configuration for wordpress
+  template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
+  notify: restart nginx

@@ -1,0 +1,9 @@
+---
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: Install epel-release
+  yum: name=epel-release state=present
+
+- name: Reload ansible_facts
+  setup:

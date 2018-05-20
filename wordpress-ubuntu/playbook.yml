@@ -1,0 +1,22 @@
+---
+- name: Install common packages
+  hosts: all
+  become: yes
+  roles:
+    - common
+
+
+- name: Install MYSQL package
+  hosts: wordpress
+  become: yes
+  roles:
+    - mysql
+
+
+- name: Install WordPress, Nginx, and PHP-FPM
+  hosts: wordpress
+  become: yes
+  roles:
+    - nginx
+    - php-fpm
+    - wordpress

@@ -1,0 +1,20 @@
+---
+# tasks file for mysql
+- name: Install Mysql package
+  apt: name={{ item }} state=present
+  with_items:
+   - mysql-server
+   - python-mysqldb
+   - python-semanage
+
+- name: Configure SELinux to start mysql on any port
+  seboolean: name=mysql_connect_any state=true persistent=yes
+  when: ansible_selinux.status == "enabled"
+
+- name: Create Mysql configuration file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify:
+  - restart mysql
+
+- name: Start Mysql Service
+  service: name=mysql state=started enabled=yes
